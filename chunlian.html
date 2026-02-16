@@ -170,7 +170,7 @@
             const xia=document.getElementById('xiaLian').textContent;
             const heng=document.getElementById('hengLian').textContent;
             const shareUrl=window.location.href.split('?')[0];
-            const shareText=`🧧 给${name}的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能收到祝福！\n\n${shareUrl}`;
+            const shareText=`🧧 给${name}的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能发送祝福！\n\n${shareUrl}`;
             if(navigator.clipboard){
                 navigator.clipboard.writeText(shareText).then(()=>showToast('已复制！打开好友聊天粘贴发送~'));
             }
