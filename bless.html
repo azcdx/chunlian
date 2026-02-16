@@ -202,8 +202,10 @@
                 } catch(e) {}
             }
             // 默认不弹窗，直接显示祝福
+            newText();
             document.getElementById('container').classList.add('show');
             document.getElementById('bottomActions').classList.add('show');
+            document.getElementById('blessTitle').textContent = '朋友';
             document.getElementById('senderNameBottom').textContent = '朋友';
         }
 
