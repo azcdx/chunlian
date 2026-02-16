@@ -60,7 +60,8 @@
     </style>
 </head>
 <body>
-    <div class="start-modal" id="startModal">
+    <!-- 输入弹窗 -->
+    <div class="start-modal" id="startModal" style="display:none;">
         <div class="modal-content">
             <div class="modal-title">🧧 新春祝福 🧧</div>
             <div class="modal-sub">请输入你的名字，发送给朋友</div>
@@ -127,7 +128,6 @@
             senderName = name;
             document.getElementById('blessTitle').textContent = name;
             document.getElementById('senderNameBottom').textContent = name;
-            document.getElementById('startModal').classList.add('hide');
             document.getElementById('clickCount').style.display = 'block';
             document.getElementById('container').classList.add('show');
             document.getElementById('bottomActions').classList.add('show');
