@@ -73,15 +73,11 @@
         <div class="lantern l1"></div><div class="lantern l2"></div><div class="lantern l3"></div><div class="lantern l4"></div>
     </div>
 
-    <div class="top-sender" id="topSender" style="display:none;">
-        <div class="sender-tag"><span id="senderNameTop">朋友</span> 的新春祝福</div>
-    </div>
-
     <div class="count" id="clickCount" style="display:none;">0</div>
 
     <div class="container" id="container" onclick="handleClick(event)">
         <div class="card">
-            <div class="bless-title">🎊 新年祝福 🎊</div>
+            <div class="bless-title" id="blessTitle">🎊 XXX的新春祝福 🎊</div>
             <div class="bless-text" id="blessText">
                 祝你在新的一年里，龙马精神、万事如意、财源广进、步步高升！
             </div>
@@ -129,7 +125,7 @@
             const name = document.getElementById('nameInput').value.trim();
             if (!name) { alert('请输入你的名字！'); return; }
             senderName = name;
-            document.getElementById('senderNameTop').textContent = name;
+            document.getElementById('blessTitle').textContent = name;
             document.getElementById('senderNameBottom').textContent = name;
             document.getElementById('startModal').classList.add('hide');
             document.getElementById('topSender').style.display = 'block';
@@ -191,7 +187,7 @@
                         senderName = name;
                         currentIdx = idx;
                         document.getElementById('nameInput').value = name;
-                        document.getElementById('senderNameTop').textContent = name;
+                        document.getElementById('blessTitle').textContent = name;
                         document.getElementById('senderNameBottom').textContent = name;
                         document.getElementById('blessText').textContent = blessTexts[idx] || blessTexts[0];
                         setTimeout(() => {
