@@ -125,8 +125,11 @@
         function startGame() {
             const name = document.getElementById('nameInput').value.trim();
             if (!name) { alert('请输入你的名字！'); return; }
+            const icons = ['🧧','🎊','🏮','✨','💰','🎉','🧨','💎'];
+            const leftIcon = icons[Math.floor(Math.random()*icons.length)];
+            const rightIcon = icons[Math.floor(Math.random()*icons.length)];
             senderName = name;
-            document.getElementById('blessTitle').textContent = name;
+            document.getElementById('blessTitle').innerHTML = leftIcon + ' ' + name + '的新春祝福 ' + rightIcon;
             document.getElementById('senderNameBottom').textContent = name;
             document.getElementById('startModal').style.display = 'none';
             document.getElementById('clickCount').style.display = 'block';
@@ -177,6 +180,7 @@
         function checkShareCode() {
             const params = new URLSearchParams(window.location.search);
             const code = params.get('h');
+            const icons = ['🧧','🎊','🏮','✨','💰','🎉','🧨','💎'];
             if (code) {
                 try {
                     const decoded = decodeURIComponent(atob(code));
@@ -186,7 +190,9 @@
                         const idx = parseInt(parts[1]) || 0;
                         senderName = name;
                         currentIdx = idx;
-                        document.getElementById('blessTitle').textContent = name;
+                        const leftIcon = icons[Math.floor(Math.random()*icons.length)];
+                        const rightIcon = icons[Math.floor(Math.random()*icons.length)];
+                        document.getElementById('blessTitle').innerHTML = leftIcon + ' ' + name + '的新春祝福 ' + rightIcon;
                         document.getElementById('senderNameBottom').textContent = name;
                         document.getElementById('blessText').textContent = blessTexts[idx] || blessTexts[0];
                     }
@@ -197,7 +203,9 @@
             document.getElementById('container').classList.add('show');
             document.getElementById('bottomActions').classList.add('show');
             if(!senderName) {
-                document.getElementById('blessTitle').textContent = '朋友';
+                const leftIcon = icons[Math.floor(Math.random()*icons.length)];
+                const rightIcon = icons[Math.floor(Math.random()*icons.length)];
+                document.getElementById('blessTitle').innerHTML = leftIcon + ' 朋友的新春祝福 ' + rightIcon;
                 document.getElementById('senderNameBottom').textContent = '朋友';
             }
         }
