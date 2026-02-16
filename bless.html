@@ -118,10 +118,18 @@
         const clickBlessings = ["🧧恭喜发财","💰财源广进","✨万事如意","🎊吉祥如意","🎉新春快乐","🚀步步高升","📚学业有成","💼事业辉煌","🍎身体健康","❤️家庭幸福","🌟心想事成","⭐吉星高照","🧧福气满满","🐴一马当先"];
         const goldItems = ['🧧','💰','🎁','🧨','🎊','✨','💎','🎉'];
 
-        // 农历时间
         function getLunarTime() {
             return "腊月廿九";
         }
+
+        let clickCount = 0;
+        let senderName = '';
+        let currentIdx = 0;
+
+        function startGame() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) { alert('请输入你的名字！'); return; }
+            const icons = ['🧧','🎊','🏮','✨','💰','🎉','🧨','💎'];
             const leftIcon = icons[Math.floor(Math.random()*icons.length)];
             const rightIcon = icons[Math.floor(Math.random()*icons.length)];
             senderName = name;
@@ -144,7 +152,6 @@
             document.getElementById('nameInput').value = '';
             document.getElementById('startModal').style.display = "flex";
         }
-        
         function handleClick(e) {
             clickCount++;
             document.getElementById('clickCount').textContent = clickCount;
