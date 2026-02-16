@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; color: #fff; padding: 15px; }
+        .box { max-width: 500px; margin: 0 auto; }
+        h1 { color: #ffd700; text-align: center; margin: 20px 0; font-size: 1.3rem; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .card { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; text-align: center; }
+        .num { font-size: 1.8rem; color: #ffd700; font-weight: bold; }
+        .label { color: rgba(255,255,255,0.7); font-size: 0.75rem; margin-top: 5px; }
+        .table { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; }
+        .th { background: rgba(255,215,0,0.2); padding: 12px 8px; display: grid; grid-template-columns: 1fr 1.5fr 0.8fr 1fr; font-size: 0.7rem; gap: 5px; }
+        .tr { padding: 10px 8px; display: grid; grid-template-columns: 1fr 1.5fr 0.8fr 1fr; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 5px; align-items: center; }
+        .tr:last-child { border: none; }
+        .btn { display: block; background: #ffd700; color: #8b0000; border: none; padding: 14px; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; margin: 20px auto; width: 200px; }
+        .empty { text-align: center; padding: 30px; color: rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🧧 祝福统计</h1>
+        <div class="stats">
+            <div class="card"><div class="num" id="total">0</div><div class="label">总访问</div></div>
+            <div class="card"><div class="num" id="shares">0</div><div class="label">转发</div></div>
+            <div class="card"><div class="num" id="new">0</div><div class="label">新建</div></div>
+        </div>
+        <div class="table">
+            <div class="th"><span>名字</span><span>时间</span><span>转发</span><span>IP</span></div>
+            <div id="list"><div class="empty">暂无数据</div></div>
+        </div>
+        <button class="btn" onclick="load()">🔄 刷新</button>
+    </div>
+    <script>
+        const data = JSON.parse(localStorage.getItem('wish_data') || '[]');
+        const total = data.length;
+        const shares = data.filter(d => d.s).length;
+        const names = [...new Set(data.map(d => d.n))].length;
+        
+        document.getElementById('total').textContent = total;
+        document.getElementById('shares').textContent = shares;
+        document.getElementById('new').textContent = names;
+        
+        if(data.length) {
+            let html = '';
+            data.slice(0,50).forEach(d => {
+                html += '<div class="tr"><span>'+d.n+'</span><span>'+d.t+'</span><span>'+(d.s?'✓':'✗')+'</span><span>'+d.ip+'</span></div>';
+            });
+            document.getElementById('list').innerHTML = html;
+        }
+        
+        function load() { location.reload(); }
+    </script>
+</body>
+</html>
