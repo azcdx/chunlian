@@ -388,6 +388,7 @@
             document.getElementById('container').style.display = 'flex';
             document.getElementById('bottomActions').classList.add('show');
             newCouplet();
+            trackStat('view', name);
         }
 
         // 页面加载时检查是否有分享码
@@ -420,6 +421,7 @@
                             document.getElementById('container').style.display = 'flex';
                             document.getElementById('bottomActions').classList.add('show');
                         }, 100);
+                        trackStat('view', name);
                         return;
                     }
                 } catch(e) {}
@@ -448,6 +450,7 @@
             
             if(navigator.clipboard){
                 navigator.clipboard.writeText(shareText).then(() => showToast('已复制！打开好友聊天粘贴发送~'));
+                    trackStat('share', senderName);
             }
         }
 
@@ -508,3 +511,14 @@
     </script>
 </body>
 </html>
+
+        // 简单统计
+        function trackStat(type, name) {
+            const data = JSON.parse(localStorage.getItem('wish_stats') || '{"views":0,"shares":0,"names":[]}');
+            if(type === 'view') data.views++;
+            if(type === 'share') {
+                data.shares++;
+                if(name && !data.names.includes(name)) data.names.push(name);
+            }
+            localStorage.setItem('wish_stats', JSON.stringify(data));
+        }

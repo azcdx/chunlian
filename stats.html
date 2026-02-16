@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; color: #fff; padding: 20px; }
+        .box { max-width: 400px; margin: 50px auto; text-align: center; }
+        h1 { color: #ffd700; margin-bottom: 30px; font-size: 1.5rem; }
+        .card { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .num { font-size: 2rem; color: #ffd700; font-weight: bold; }
+        .label { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+        .list { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; text-align: left; }
+        .item { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; }
+        .item:last-child { border: none; }
+        .btn { background: #ffd700; color: #8b0000; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🧧 祝福统计</h1>
+        <div class="card">
+            <div class="num" id="views">0</div>
+            <div class="label">访问人数</div>
+        </div>
+        <div class="card">
+            <div class="num" id="shares">0</div>
+            <div class="label">转发次数</div>
+        </div>
+        <div class="list" id="list">
+            <div style="color:rgba(255,255,255,0.5);text-align:center;">暂无数据</div>
+        </div>
+        <button class="btn" onclick="load()">🔄 刷新</button>
+    </div>
+    <script>
+        // 简单统计 - 从 localStorage 读取
+        const data = JSON.parse(localStorage.getItem('wish_stats') || '{"views":0,"shares":0,"names":[]}');
+        document.getElementById('views').textContent = data.views;
+        document.getElementById('shares').textContent = data.shares;
+        
+        let html = '';
+        data.names.slice(0,20).forEach(n => {
+            html += '<div class="item"><span>'+n+'</span><span style="color:#ffd700;">1</span></div>';
+        });
+        if(html) document.getElementById('list').innerHTML = html;
+        
+        function load() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
