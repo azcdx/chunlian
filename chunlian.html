@@ -393,8 +393,6 @@
         // 页面加载时检查是否有分享码
 
         // 检查哈希
-
-        // 检查哈希
         function checkShareCode() {
             const params = new URLSearchParams(window.location.search);
             const hash = params.get('h');
@@ -416,9 +414,12 @@
                             document.getElementById('container').style.display = 'flex';
                             document.getElementById('bottomActions').classList.add('show');
                         }, 100);
+                        return; // 成功读取数据，不显示输入窗口
                     }
                 } catch(e) {}
             }
+            // 没有读到数据或没有hash，显示输入窗口
+            document.getElementById('startModal').classList.remove('hide');
         }
 
         // 分享函数 - 生成随机哈希链接
