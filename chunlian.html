@@ -398,7 +398,7 @@
             const code = params.get('h');
             if (code) {
                 try {
-                    const data = JSON.parse(atob(code));
+                    const data = JSON.parse(decodeURIComponent(atob(code)));
                     if (data && data.n) {
                         senderName = data.n;
                         document.getElementById('nameInput').value = data.n;
@@ -431,7 +431,7 @@
             
             // 编码数据到URL
             const data = JSON.stringify({n: name, s: shang, x: xia, h: heng});
-            const code = btoa(data);
+            const code = btoa(encodeURIComponent(data));
             
             // 生成短链接
             const path = window.location.pathname.replace('/chunlian/chunlian.html', '/chunlian/');
