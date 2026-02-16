@@ -68,7 +68,7 @@
     <div class="start-modal" id="startModal">
         <div class="start-content">
             <div class="start-title">🧧 新春祝福 🧧</div>
-            <div class="start-subtitle">先输入你的名字，开启祝福之旅</div>
+            <div class="start-subtitle">请输入你的名字，发送给朋友</div>
             <input type="text" class="start-input" id="nameInput" placeholder="请输入你的名字" maxlength="5">
             <button class="start-btn" onclick="startGame()">开始祝福 ✨</button>
         </div>
@@ -78,7 +78,7 @@
         <div class="lantern"></div><div class="lantern"></div><div class="lantern"></div><div class="lantern"></div>
     </div>
 
-    <div class="top-title" id="topTitle">🧧 <span id="titleName">朋友</span> 的新春祝福 🧧</div>
+    <div class="top-title" id="topTitle">🧧 <span id="senderName">朋友</span> 的新春祝福 🧧</div>
     <div class="click-count" id="clickCount">点击: 0</div>
 
     <div class="container" id="container" onclick="handleClick(event)">
@@ -117,13 +117,13 @@
         const blessings = ["恭喜发财","财源广进","万事如意","吉祥如意","新春快乐","步步高升","学业有成","事业辉煌","身体健康","家庭幸福","心想事成","吉星高照","福气满满","金玉满堂"];
         const goldItems = ['🧧','💰','🎁','🧨','🎊','✨','💎','🎉'];
         let clickCount = 0;
-        let currentName = '';
+        let senderName = '';
 
         function startGame() {
             const name = document.getElementById('nameInput').value.trim();
             if (!name) { alert('请输入你的名字！'); return; }
-            currentName = name;
-            document.getElementById('titleName').textContent = name;
+            senderName = name;
+            document.getElementById('senderName').textContent = name;
             document.getElementById('startModal').classList.add('hide');
             document.getElementById('container').classList.add('show');
             document.getElementById('bottomActions').classList.add('show');
@@ -165,12 +165,12 @@
         }
 
         function shareToFriends() {
-            const name=currentName;
+            const name=senderName;
             const shang=document.getElementById('shangLian').textContent;
             const xia=document.getElementById('xiaLian').textContent;
             const heng=document.getElementById('hengLian').textContent;
             const shareUrl=window.location.href.split('?')[0];
-            const shareText=`🧧 给${name}的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能发送祝福！\n\n${shareUrl}`;
+            const shareText=`🧧 ${name} 的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能发送祝福！\n\n${shareUrl}`;
             if(navigator.clipboard){
                 navigator.clipboard.writeText(shareText).then(()=>showToast('已复制！打开好友聊天粘贴发送~'));
             }
