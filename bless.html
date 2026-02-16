@@ -216,7 +216,8 @@
             const code = name + '|' + currentIdx;
             const shortCode = btoa(encodeURIComponent(code));
             
-            const path = window.location.pathname.replace('/bless.html', '/bless/');
+            // 保持原路径
+            const path = window.location.pathname;
             const shareUrl = window.location.origin + path + '?h=' + shortCode;
             
             const shareText = `🎊 ${name} 的新春祝福 🎊\n\n${text}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${shareUrl} ✨`;

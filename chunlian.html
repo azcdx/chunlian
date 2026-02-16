@@ -444,7 +444,7 @@
             const shortCode = btoa(encodeURIComponent(code));
             
             // 生成短链接
-            const path = window.location.pathname.replace('/chunlian/chunlian.htmlindex.html', '/chunlian/chunlian.html');
+            const path = window.location.pathname;
             const shareUrl = window.location.origin + path + '?h=' + shortCode;
             
             const shareText = `🎊 ${name} 的新春祝福 🎊\n\n🐴 上联：${shang}\n🐴 下联：${xia}\n🏮 横批：${heng}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${shareUrl} ✨`;
