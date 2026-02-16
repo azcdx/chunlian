@@ -395,11 +395,11 @@
         // 检查哈希
         function checkShareCode() {
             const params = new URLSearchParams(window.location.search);
-            const hash = params.get('h');
-            if (hash) {
+            const code = params.get('h');
+            if (code) {
                 try {
-                    const data = JSON.parse(localStorage.getItem('wish_' + hash));
-                    if (data) {
+                    const data = JSON.parse(atob(code));
+                    if (data && data.n) {
                         senderName = data.n;
                         document.getElementById('nameInput').value = data.n;
                         document.getElementById('senderNameTop').textContent = data.n;
@@ -422,22 +422,20 @@
             document.getElementById('startModal').classList.remove('hide');
         }
 
-        // 分享函数 - 生成随机哈希链接
+        // 分享函数 - 数据编码到链接
         function shareToFriends() {
             const name = senderName;
             const shang = document.getElementById('shangLian').textContent;
             const xia = document.getElementById('xiaLian').textContent;
             const heng = document.getElementById('hengLian').textContent;
             
-            // 生成随机哈希
-            const hash = Math.random().toString(36).substring(2, 10);
-            
-            // 存储到本地
-            localStorage.setItem('wish_' + hash, JSON.stringify({n: name, s: shang, x: xia, h: heng}));
+            // 编码数据到URL
+            const data = JSON.stringify({n: name, s: shang, x: xia, h: heng});
+            const code = btoa(data);
             
             // 生成短链接
-            const baseUrl = window.location.href.split('?')[0];
-            const shareUrl = baseUrl + '?h=' + hash;
+            const path = window.location.pathname.replace('/chunlian/chunlian.html', '/chunlian/');
+            const shareUrl = window.location.origin + path + '?h=' + code;
             
             const shareText = `🎊 ${name} 的新春祝福 🎊\n\n🐴 上联：${shang}\n🐴 下联：${xia}\n🏮 横批：${heng}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${shareUrl} ✨`;
             
