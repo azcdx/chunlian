@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>新春祝福 🧧</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif; background: linear-gradient(180deg, #c41e3a 0%, #8b0000 50%, #a52a2a 100%); min-height: 100vh; color: #fff; overflow: hidden; }
@@ -341,6 +342,9 @@
     </div>
 
     <!-- 用于生成图片的隐藏容器 -->
+    <div id="imageContainer" style="position:fixed;left:-9999px;top:-9999px;">
+        <canvas id="shareCanvas" width="400" height="600"></canvas>
+    </div>
 
     <div class="toast" id="toast">已复制！打开好友聊天粘贴发送~</div>
 
@@ -383,8 +387,6 @@
         }
 
         // 页面加载时检查是否有分享码
-
-        // 检查哈希
 
         // 检查哈希
         function checkShareCode() {
@@ -436,6 +438,27 @@
                 navigator.clipboard.writeText(shareText).then(() => showToast('已复制！打开好友聊天粘贴发送~'));
             }
         }
+        // 分享函数 - 生成随机短码
+        function shareToFriends() {
+            const name = senderName;
+            const shang = document.getElementById('shangLian').textContent;
+            const xia = document.getElementById('xiaLian').textContent;
+            const heng = document.getElementById('hengLian').textContent;
+            
+            // 编码内容为base64
+            const data = {n: name, s: shang, x: xia, h: heng};
+            const code = btoa(JSON.stringify(data));
+            
+            // 生成随机短链接
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = baseUrl + '?s=' + code;
+            
+            const shareText = `🧧 ${name} 的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能发送祝福！\n\n${shareUrl}`;
+            
+            if(navigator.clipboard){
+                navigator.clipboard.writeText(shareText).then(() => showToast('已复制！打开好友聊天粘贴发送~'));
+            }
+        }
 
         function newCouplet() { 
             const r = couplets[Math.floor(Math.random()*couplets.length)]; 
@@ -471,19 +494,30 @@
             document.body.appendChild(bless);
             setTimeout(() => bless.remove(), 2500);
         }
-        
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
 
-        document.getElementById('nameInput').addEventListener('keypress', function(e){
-            if(e.key === 'Enter') startGame();
-        });
-        
-        checkShareCode();
-    </script>
-</body>
-</html>
+        // 生成分享图片
+        function generateImage() {
+            const canvas = document.getElementById('shareCanvas');
+            const ctx = canvas.getContext('2d');
+            const name = senderName;
+            const shang = document.getElementById('shangLian').textContent;
+            const xia = document.getElementById('xiaLian').textContent;
+            const heng = document.getElementById('hengLian').textContent;
+            
+            // 背景渐变
+            const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+            gradient.addColorStop(0, '#c41e3a');
+            gradient.addColorStop(0.5, '#8b0000');
+            gradient.addColorStop(1, '#a52a2a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 600);
+            
+            // 金色边框
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(15, 15, 370, 570);
+            
+            // 发送人标题
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 28px KaiTi, STKaiti, Microsoft YaHei';
+            ctx.textAlign = 'center';
