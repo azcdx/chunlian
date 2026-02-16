@@ -82,7 +82,7 @@
             <div class="bless-text" id="blessText">
                 祝你在新的一年里，龙马精神、万事如意、财源广进、步步高升！
             </div>
-            <div class="author">—— <span id="senderNameBottom">朋友</span> 祝福</div>
+            <div class="author">—— <span id="lunarTime">朋友</span> 祝福</div>
         </div>
         <div class="tap-hint">👆 点击屏幕有惊喜</div>
     </div>
@@ -117,7 +117,27 @@
         
         const clickBlessings = ["🧧恭喜发财","💰财源广进","✨万事如意","🎊吉祥如意","🎉新春快乐","🚀步步高升","📚学业有成","💼事业辉煌","🍎身体健康","❤️家庭幸福","🌟心想事成","⭐吉星高照","🧧福气满满","🐴一马当先"];
         const goldItems = ['🧧','💰','🎁','🧨','🎊','✨','💎','🎉'];
-        
+
+        // 农历时间
+        function getLunarTime() {
+            const lunarMonths = [', '正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','冬月','腊月'];
+            const lunarDays = [', '初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+                '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十', 
+                '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            let lunarMonth = month;
+            let lunarDay = day;
+            if (month === 1 && day >= 29) {
+                lunarMonth = 12;
+                lunarDay = day - 28;
+            } else if (month >= 2) {
+                lunarMonth = month - 1;
+                lunarDay = day;
+            }
+            return (lunarMonths[lunarMonth] || '正月') + (lunarDays[lunarDay] || '初一');
+        }        
         let clickCount = 0;
         let senderName = '';
         let currentIdx = 0;
@@ -130,7 +150,7 @@
             const rightIcon = icons[Math.floor(Math.random()*icons.length)];
             senderName = name;
             document.getElementById('blessTitle').innerHTML = leftIcon + ' ' + name + '的新春祝福 ' + rightIcon;
-            document.getElementById('senderNameBottom').textContent = name;
+            document.getElementById('lunarTime').textContent = getLunarTime();
             document.getElementById('startModal').style.display = 'none';
             document.getElementById('clickCount').style.display = 'block';
             document.getElementById('container').classList.add('show');
@@ -193,7 +213,7 @@
                         const leftIcon = icons[Math.floor(Math.random()*icons.length)];
                         const rightIcon = icons[Math.floor(Math.random()*icons.length)];
                         document.getElementById('blessTitle').innerHTML = leftIcon + ' ' + name + '的新春祝福 ' + rightIcon;
-                        document.getElementById('senderNameBottom').textContent = name;
+                        document.getElementById('lunarTime').textContent = getLunarTime();
                         document.getElementById('blessText').textContent = blessTexts[idx] || blessTexts[0];
                     }
                 } catch(e) {}
@@ -206,7 +226,7 @@
                 const leftIcon = icons[Math.floor(Math.random()*icons.length)];
                 const rightIcon = icons[Math.floor(Math.random()*icons.length)];
                 document.getElementById('blessTitle').innerHTML = leftIcon + ' 朋友的新春祝福 ' + rightIcon;
-                document.getElementById('senderNameBottom').textContent = '朋友';
+                document.getElementById('lunarTime').textContent = getLunarTime();
             }
         }
 
