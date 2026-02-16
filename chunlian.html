@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>新春祝福 🧧</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif; background: linear-gradient(180deg, #c41e3a 0%, #8b0000 50%, #a52a2a 100%); min-height: 100vh; color: #fff; overflow: hidden; }
@@ -337,10 +338,15 @@
     <!-- 底部按钮 -->
     <div class="bottom-actions" id="bottomActions">
         <button class="action-btn new-btn" onclick="event.stopPropagation();newCouplet()">🔄 换一幅</button>
-        <button class="action-btn share-btn" onclick="event.stopPropagation();shareToFriends()">📤 转发祝福</button>
+        <button class="action-btn share-btn" onclick="event.stopPropagation();generateImage()">🖼️ 生成分享图</button>
     </div>
 
-    <div class="toast" id="toast">已复制！打开好友聊天粘贴发送~</div>
+    <!-- 用于生成图片的隐藏容器 -->
+    <div id="imageContainer" style="position:fixed;left:-9999px;top:-9999px;">
+        <canvas id="shareCanvas" width="400" height="600"></canvas>
+    </div>
+
+    <div class="toast" id="toast">图片已生成，长按保存分享~</div>
 
     <script>
         // 马年春联库（7言）
@@ -415,23 +421,83 @@
             setTimeout(() => bless.remove(), 2500);
         }
 
-        function shareToFriends() {
+        // 生成分享图片
+        function generateImage() {
+            const canvas = document.getElementById('shareCanvas');
+            const ctx = canvas.getContext('2d');
             const name = senderName;
             const shang = document.getElementById('shangLian').textContent;
             const xia = document.getElementById('xiaLian').textContent;
             const heng = document.getElementById('hengLian').textContent;
-            const shareUrl = window.location.href.split('?')[0];
-            const shareText = `🧧 ${name} 的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能发送祝福！\n\n${shareUrl}`;
-            if(navigator.clipboard){
-                navigator.clipboard.writeText(shareText).then(() => showToast('已复制！打开好友聊天粘贴发送~'));
+            
+            // 背景渐变
+            const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+            gradient.addColorStop(0, '#c41e3a');
+            gradient.addColorStop(0.5, '#8b0000');
+            gradient.addColorStop(1, '#a52a2a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 600);
+            
+            // 金色边框
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(15, 15, 370, 570);
+            
+            // 发送人标题
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 28px KaiTi, STKaiti, Microsoft YaHei';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${name} 的新春祝福`, 200, 70);
+            
+            // 横批背景
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(100, 100, 200, 45);
+            ctx.fillStyle = '#8b0000';
+            ctx.font = 'bold 24px KaiTi, STKaiti';
+            ctx.fillText(heng, 200, 133);
+            
+            // 上联（右边）
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 32px KaiTi, STKaiti';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < shang.length; i++) {
+                ctx.fillText(shang[i], 310, 200 + i * 45);
             }
+            
+            // 下联（左边）
+            for (let i = 0; i < xia.length; i++) {
+                ctx.fillText(xia[i], 90, 200 + i * 45);
+            }
+            
+            // 福字
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 80px KaiTi, STKaiti';
+            ctx.fillText('福', 200, 480);
+            
+            // 落款
+            ctx.font = '20px KaiTi, STKaiti';
+            ctx.fillText(`—— ${name} 祝福`, 200, 550);
+            
+            // 显示图片提示
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const img = new Image();
+                img.onload = function() {
+                    // 在新窗口打开图片
+                    const win = window.open('');
+                    win.document.write('<img src="' + url + '" style="max-width:100%;">');
+                    win.document.title = '新春祝福';
+                    showToast('图片已生成，长按保存分享~');
+                };
+                img.src = url;
+            });
         }
         
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.textContent = msg;
             t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2500);
+            setTimeout(() => t.style.display = 'none', 3000);
         }
 
         document.getElementById('nameInput').addEventListener('keypress', function(e){
