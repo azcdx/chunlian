@@ -398,15 +398,21 @@
             const code = params.get('h');
             if (code) {
                 try {
-                    const data = JSON.parse(decodeURIComponent(atob(code)));
-                    if (data && data.n) {
-                        senderName = data.n;
-                        document.getElementById('nameInput').value = data.n;
-                        document.getElementById('senderNameTop').textContent = data.n;
-                        document.getElementById('senderNameBottom').textContent = data.n;
-                        document.getElementById('shangLian').textContent = data.s;
-                        document.getElementById('xiaLian').textContent = data.x;
-                        document.getElementById('hengLian').textContent = data.h;
+                    const decoded = decodeURIComponent(atob(code));
+                    const parts = decoded.split('|');
+                    if (parts.length >= 1) {
+                        const name = parts[0];
+                        const idx = parseInt(parts[1]) || 0;
+                        senderName = name;
+                        document.getElementById('nameInput').value = name;
+                        document.getElementById('senderNameTop').textContent = name;
+                        document.getElementById('senderNameBottom').textContent = name;
+                        // 显示对应的春联
+                        if (couplets[idx]) {
+                            document.getElementById('shangLian').textContent = couplets[idx].shang;
+                            document.getElementById('xiaLian').textContent = couplets[idx].xia;
+                            document.getElementById('hengLian').textContent = couplets[idx].heng;
+                        }
                         setTimeout(() => {
                             document.getElementById('startModal').classList.add('hide');
                             document.getElementById('topSender').style.display = 'block';
@@ -414,7 +420,7 @@
                             document.getElementById('container').style.display = 'flex';
                             document.getElementById('bottomActions').classList.add('show');
                         }, 100);
-                        return; // 成功读取数据，不显示输入窗口
+                        return;
                     }
                 } catch(e) {}
             }
@@ -429,13 +435,14 @@
             const xia = document.getElementById('xiaLian').textContent;
             const heng = document.getElementById('hengLian').textContent;
             
-            // 编码数据到URL
-            const data = JSON.stringify({n: name, s: shang, x: xia, h: heng});
-            const code = btoa(encodeURIComponent(data));
+            // 简单编码：名字 + 春联索引
+            const idx = couplets.findIndex(c => c.shang === shang && c.xia === xia);
+            const code = name + '|' + idx;
+            const shortCode = btoa(encodeURIComponent(code));
             
             // 生成短链接
             const path = window.location.pathname.replace('/chunlian/chunlian.html', '/chunlian/');
-            const shareUrl = window.location.origin + path + '?h=' + code;
+            const shareUrl = window.location.origin + path + '?h=' + shortCode;
             
             const shareText = `🎊 ${name} 的新春祝福 🎊\n\n🐴 上联：${shang}\n🐴 下联：${xia}\n🏮 横批：${heng}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${shareUrl} ✨`;
             
