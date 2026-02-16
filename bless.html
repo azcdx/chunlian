@@ -120,23 +120,8 @@
 
         // 农历时间
         function getLunarTime() {
-            const now = new Date();
-            const m = now.getMonth() + 1;
-            const d = now.getDate();
-            if (m === 1 && d < 29) return "腊月廿九";
-            if (m === 1 && d === 29) return "正月初一";
-            if (m === 1 && d === 30) return "正月初二";
-            if (m === 2) return "正月初" + ["三","四","五","六","七","八","九","十"][d-1];
-            return "正月";
+            return "腊月廿九";
         }
-        let clickCount = 0;
-        let senderName = '';
-        let currentIdx = 0;
-
-        function startGame() {
-            const name = document.getElementById('nameInput').value.trim();
-            if (!name) { alert('请输入你的名字！'); return; }
-            const icons = ['🧧','🎊','🏮','✨','💰','🎉','🧨','💎'];
             const leftIcon = icons[Math.floor(Math.random()*icons.length)];
             const rightIcon = icons[Math.floor(Math.random()*icons.length)];
             senderName = name;
