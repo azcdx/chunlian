@@ -438,16 +438,26 @@
             const xia = document.getElementById('xiaLian').textContent;
             const heng = document.getElementById('hengLian').textContent;
             
-            // 简单编码：名字 + 春联索引
             const idx = couplets.findIndex(c => c.shang === shang && c.xia === xia);
             const code = name + '|' + idx;
             const shortCode = btoa(encodeURIComponent(code));
             
-            // 生成短链接
             const path = window.location.pathname;
-            const shareUrl = window.location.origin + path + '?h=' + shortCode;
+            const longUrl = window.location.origin + path + '?h=' + shortCode;
             
-            const shareText = `🎊 ${name} 的新春祝福 🎊\n\n🐴 上联：${shang}\n🐴 下联：${xia}\n🏮 横批：${heng}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${shareUrl} ✨`;
+            fetch('https://is.gd/create.php?format=json&url=' + encodeURIComponent(longUrl))
+                .then(r => r.json())
+                .then(data => {
+                    const shortUrl = data.shorturl || longUrl;
+                    shareText(name, shang, xia, heng, shortUrl);
+                })
+                .catch(() => {
+                    shareText(name, shang, xia, heng, longUrl);
+                });
+        }
+        
+        function shareText(name, shang, xia, heng, url) {
+            const shareText = `🎊 ${name} 的新春祝福 🎊\n\n🐴 上联：${shang}\n🐴 下联：${xia}\n🏮 横批：${heng}\n\n🎁 点链接，你也能发送祝福！\n\n✨ ${url} ✨`;
             
             if(navigator.clipboard){
                 navigator.clipboard.writeText(shareText).then(() => showToast('已复制！打开好友聊天粘贴发送~'));
