@@ -39,6 +39,7 @@
             font-weight: bold; 
             border-radius: 30px; 
             box-shadow: 0 4px 20px rgba(255,215,0,0.5);
+            white-space: nowrap;
         }
 
         /* 春联主体 */
@@ -169,11 +170,18 @@
             left: 50%; 
             transform: translateX(-50%); 
             color: #ffd700; 
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             z-index: 10;
             text-align: center;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             white-space: nowrap;
+            animation: tapAnim 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes tapAnim {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.15); }
         }
 
         .bottom-actions { 
