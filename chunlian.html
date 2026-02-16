@@ -83,9 +83,8 @@
             position: absolute;
             pointer-events: none;
             z-index: 101;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            color: #ffd700;
             text-shadow: 0 0 10px rgba(255,215,0,0.8), 2px 2px 4px rgba(0,0,0,0.5);
             animation: riseUp 2.5s ease-out forwards;
             white-space: nowrap;
@@ -107,56 +106,83 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 80px 20px 40px;
+            padding: 60px 20px 100px;
             cursor: pointer;
+        }
+
+        /* 顶部标题 */
+        .top-title {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #ffd700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(231,76,60,0.4);
+            animation: titlePulse 2s infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(231,76,60,0.4); }
+            50% { box-shadow: 0 4px 25px rgba(231,76,60,0.7); }
         }
 
         /* 点击提示 */
         .tap-hint {
             position: absolute;
-            bottom: 100px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-            animation: pulse 2s infinite;
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
             text-align: center;
+            z-index: 10;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
         }
 
         /* 春联卡片 */
         .couplet-card {
             background: linear-gradient(135deg, #8B0000, #a52a2a);
             border-radius: 20px;
-            padding: 40px 25px;
+            padding: 35px 20px;
             text-align: center;
             border: 4px solid #ffd700;
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
             max-width: 90%;
+            width: 320px;
         }
 
         .couplet-title {
             color: #ffd700;
-            font-size: 1.4rem;
-            margin-bottom: 25px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             text-shadow: 0 0 15px rgba(255,215,0,0.6);
         }
 
         .couplet-row {
             display: flex;
-            gap: 30px;
+            gap: 25px;
             justify-content: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .couplet-text {
             font-family: "KaiTi", "STKaiti", serif;
-            font-size: 1.6rem;
-            line-height: 2.4;
+            font-size: 1.5rem;
+            line-height: 2.2;
             color: #ffd700;
             writing-mode: vertical-rl;
             text-orientation: upright;
@@ -165,43 +191,37 @@
         .couplet-heng {
             background: #ffd700;
             color: #8B0000;
-            padding: 8px 25px;
-            font-size: 1.2rem;
+            padding: 6px 20px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 5px;
             display: inline-block;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .author {
             color: rgba(255,215,0,0.7);
-            font-size: 0.85rem;
-            margin-top: 20px;
+            font-size: 0.8rem;
+            margin-top: 15px;
         }
 
         /* 福字 */
         .fu-container {
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .fu {
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: #e74c3c;
-            text-shadow: 0 0 25px rgba(231,76,60,0.8);
+            text-shadow: 0 0 20px rgba(231,76,60,0.8);
             font-weight: bold;
             display: inline-block;
-            animation: fuPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes fuPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
 
         /* 底部按钮 */
         .bottom-actions {
             position: fixed;
-            bottom: 30px;
+            bottom: 80px;
             left: 0;
             right: 0;
             display: flex;
@@ -212,7 +232,7 @@
 
         .action-btn {
             padding: 12px 25px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: none;
             border-radius: 25px;
             cursor: pointer;
@@ -240,14 +260,16 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             color: white;
-            padding: 20px 40px;
+            padding: 18px 35px;
             border-radius: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: none;
             z-index: 1000;
             animation: fadeInOut 2s;
+            max-width: 80%;
+            text-align: center;
         }
 
         @keyframes fadeInOut {
@@ -260,13 +282,13 @@
         /* 计数器 */
         .click-count {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 60px;
+            right: 15px;
             background: rgba(231, 76, 60, 0.9);
             color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             z-index: 100;
         }
     </style>
@@ -280,15 +302,16 @@
         <div class="lantern"></div>
     </div>
 
+    <!-- 顶部标题 -->
+    <div class="top-title" id="topTitle">🧧 <span id="titleName">朋友</span> 的新春祝福 🧧</div>
+
     <!-- 点击计数器 -->
-    <div class="click-count">点击: <span id="count">0</span>次</div>
+    <div class="click-count" id="clickCount">点击: 0</div>
 
     <!-- 主内容 -->
     <div class="container" onclick="handleClick(event)">
         <!-- 春联卡片 -->
         <div class="couplet-card">
-            <div class="couplet-title">🧧 <span id="titleName">朋友</span> 的新春祝福 🧧</div>
-            
             <div class="couplet-row">
                 <div class="couplet-text">
                     <div id="shangLian">龙腾盛世</div>
@@ -302,15 +325,15 @@
             
             <div class="fu-container">
                 <span class="fu">福</span>
-                <span class="fu fu-reverse">福</span>
+                <span class="fu" style="transform: rotate(180deg);display:inline-block;">福</span>
             </div>
             
-            <div class="author">—— 点击产生惊喜</div>
+            <div class="author">—— 点击屏幕产生惊喜</div>
         </div>
 
         <!-- 点击提示 -->
         <div class="tap-hint">
-            👆 点击屏幕任意位置产生惊喜
+            👆 快戳屏幕，有惊喜！
         </div>
     </div>
 
@@ -320,12 +343,12 @@
             🔄 换一幅
         </button>
         <button class="action-btn share-btn" onclick="event.stopPropagation();shareToFriends()">
-            📤 发送给朋友
+            📤 转发祝福
         </button>
     </div>
 
     <!-- 复制提示 -->
-    <div class="copy-toast" id="toast">已复制！粘贴发送给朋友~</div>
+    <div class="copy-toast" id="toast">已复制！打开好友聊天粘贴发送~</div>
 
     <script>
         // 春联库
@@ -344,20 +367,13 @@
 
         // 四字祝福库
         const blessings = [
-            "恭喜发财", "财源广进", "万事如意", "吉祥如意",
-            "新春快乐", "步步高升", "学业有成", "事业辉煌",
-            "身体健康", "家庭幸福", "心想事成", "吉星高照",
-            "福气满满", "金玉满堂", "龙马精神", "瑞气盈门",
-            "喜气洋洋", "欢乐祥和", "幸福美满", "前程似锦",
-            "大吉大利", "五福临门", "富贵吉祥", "和气生财",
-            "青春永驻", "活力满满", "好运连连", "顺顺利利"
+            "恭喜发财","财源广进","万事如意","吉祥如意","新春快乐","步步高升","学业有成","事业辉煌","身体健康","家庭幸福","心想事成","吉星高照","福气满满","金玉满堂","龙马精神","瑞气盈门","喜气洋洋","欢乐祥和","幸福美满","前程似锦","大吉大利","五福临门","和气生财"
         ];
 
         // 元宝/红包
-        const goldItems = ['🧧', '💰', '🎁', '🧨', '🎊', '✨', '💎', '🎉'];
+        const goldItems = ['🧧','💰','🎁','🧨','🎊','✨','💎','🎉'];
 
         let clickCount = 0;
-        let currentCouplet = null;
 
         // 初始化
         function init() {
@@ -371,17 +387,17 @@
         // 生成新春联
         function newCouplet() {
             const randomIndex = Math.floor(Math.random() * couplets.length);
-            currentCouplet = couplets[randomIndex];
+            const current = couplets[randomIndex];
             
-            document.getElementById('shangLian').textContent = currentCouplet.shang;
-            document.getElementById('xiaLian').textContent = currentCouplet.xia;
-            document.getElementById('hengLian').textContent = currentCouplet.heng;
+            document.getElementById('shangLian').textContent = current.shang;
+            document.getElementById('xiaLian').textContent = current.xia;
+            document.getElementById('hengLian').textContent = current.heng;
         }
 
         // 处理点击
         function handleClick(e) {
             clickCount++;
-            document.getElementById('count').textContent = clickCount;
+            document.getElementById('clickCount').textContent = '点击: ' + clickCount;
             
             // 创建掉落元宝
             createFallingGold(e.clientX, e.clientY);
@@ -402,9 +418,7 @@
             
             document.body.appendChild(item);
             
-            setTimeout(() => {
-                item.remove();
-            }, 2000);
+            setTimeout(() => { item.remove(); }, 2000);
         }
 
         // 创建上升祝福
@@ -414,29 +428,31 @@
             bless.textContent = blessings[Math.floor(Math.random() * blessings.length)];
             bless.style.left = (x - 50 + Math.random() * 100) + 'px';
             bless.style.top = y + 'px';
-            // 随机颜色
-            const colors = ['#ffd700', '#ff6b6b', '#e74c3c', '#27ae60', '#3498db'];
+            
+            const colors = ['#ffd700','#ff6b6b','#e74c3c','#27ae60','#3498db'];
             bless.style.color = colors[Math.floor(Math.random() * colors.length)];
             
             document.body.appendChild(bless);
             
-            setTimeout(() => {
-                bless.remove();
-            }, 2500);
+            setTimeout(() => { bless.remove(); }, 2500);
         }
 
-        // 分享给朋友
+        // 转发给朋友
         function shareToFriends() {
             const name = document.getElementById('titleName').textContent;
             const shang = document.getElementById('shangLian').textContent;
             const xia = document.getElementById('xiaLian').textContent;
             const heng = document.getElementById('hengLian').textContent;
 
-            const shareText = `🧧 给${name}的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击屏幕有惊喜！\n\n你也想要专属祝福？戳这里生成👉`;
+            // 获取当前页面的链接（去掉name参数，重新生成）
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = baseUrl + '?name=' + encodeURIComponent(name);
+
+            const shareText = `🧧 给${name}的新春祝福 🧧\n\n上联：${shang}\n下联：${xia}\n横批：${heng}\n\n👆 点击链接，你也能收到祝福！\n\n${shareUrl}`;
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    showToast('已复制！粘贴发送给朋友~');
+                    showToast('已复制！打开好友聊天粘贴发送~');
                 });
             } else {
                 showToast('长按春联保存图片分享~');
@@ -450,7 +466,7 @@
             toast.style.display = 'block';
             setTimeout(() => {
                 toast.style.display = 'none';
-            }, 2000);
+            }, 2500);
         }
 
         // 初始化
