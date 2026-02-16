@@ -201,7 +201,10 @@
                     }
                 } catch(e) {}
             }
-            document.getElementById('startModal').classList.remove('hide');
+            // 默认不弹窗，直接显示祝福
+            document.getElementById('container').classList.add('show');
+            document.getElementById('bottomActions').classList.add('show');
+            document.getElementById('senderNameBottom').textContent = '朋友';
         }
 
         // 分享函数
